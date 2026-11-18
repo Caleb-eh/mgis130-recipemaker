@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pantry-to-Plate | Recipe Finder &amp; Nutrition Tracker</title>
+  <link rel="stylesheet" href="3_styles/style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <h1>Pantry-to-Plate</h1>
+        <p class="tagline">Turn what you have into what you eat—and track your macros automatically.</p>
+      </div>
+      <div class="data-mode-badge" id="data-mode-badge" title="Currently running on local sample data">
+        Sample Data Mode
+      </div>
+    </div>
+  </header>
+
+  <main class="container app-grid">
+    <!-- LEFT COLUMN: Kitchen Pantry & Daily Nutrition Dashboard -->
+    <aside class="sidebar">
+      <!-- 1. Kitchen Pantry Management -->
+      <section class="card" aria-labelledby="pantry-heading">
+        <div class="card-header">
+          <h2 id="pantry-heading">My Kitchen Pantry</h2>
+          <button type="button" id="clear-pantry-btn" class="btn-text" title="Remove all pantry items">
+            Clear All
+          </button>
+        </div>
+
+        <form id="pantry-form" class="pantry-form">
+          <div class="input-group">
+            <label for="ingredient-input" class="sr-only">Ingredient name</label>
+            <input
+              type="text"
+              id="ingredient-input"
+              placeholder="e.g., chicken breast, spinach, rice"
+              autocomplete="off"
+              required
+            />
+          </div>
+          <div class="input-row">
+            <label for="quantity-input" class="sr-only">Optional quantity</label>
+            <input
+              type="text"
+              id="quantity-input"
+              placeholder="Qty (optional, e.g., 2 cups)"
+              autocomplete="off"
+            />
+            <button type="submit" class="btn-primary">Add</button>
+          </div>
+        </form>
+
+        <div class="pantry-meta">
+          <span id="pantry-count">0 items in pantry</span>
+          <button type="button" id="load-sample-pantry-btn" class="btn-link">
+            Load Starter Pantry
+          </button>
+        </div>
+
+        <ul id="pantry-list" class="pantry-list" aria-live="polite">
+          <!-- Pantry items injected by 2_scripts/script.js -->
+        </ul>
+      </section>
+
+      <!-- 2. Nutrition Dashboard & Daily Meal Log -->
+      <section class="card" aria-labelledby="nutrition-heading">
+        <div class="card-header">
+          <h2 id="nutrition-heading">Today's Nutrition</h2>
+          <button type="button" id="reset-log-btn" class="btn-text" title="Reset today's meal log">
+            Reset Day
+          </button>
+        </div>
+
+        <div class="macro-grid">
+          <div class="macro-box">
+            <span class="macro-label">Calories</span>
+            <strong class="macro-value" id="total-calories">0</strong>
+            <span class="macro-goal">/ <span id="goal-calories">2000</span> kcal</span>
+            <div class="progress-track">
+              <div class="progress-fill" id="bar-calories" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="macro-box">
+            <span class="macro-label">Protein</span>
+            <strong class="macro-value" id="total-protein">0g</strong>
+            <span class="macro-goal">/ <span id="goal-protein">150</span>g</span>
+            <div class="progress-track">
+              <div class="progress-fill" id="bar-protein" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="macro-box">
+            <span class="macro-label">Carbs</span>
+            <strong class="macro-value" id="total-carbs">0g</strong>
+            <span class="macro-goal">/ <span id="goal-carbs">220</span>g</span>
+            <div class="progress-track">
+              <div class="progress-fill" id="bar-carbs" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="macro-box">
+            <span class="macro-label">Fat</span>
+            <strong class="macro-value" id="total-fat">0g</strong>
+            <span class="macro-goal">/ <span id="goal-fat">65</span>g</span>
+            <div class="progress-track">
+              <div class="progress-fill" id="bar-fat" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="meal-log-section">
+          <h3>Logged Meals Today</h3>
+          <ul id="meal-log-list" class="meal-log-list" aria-live="polite">
+            <!-- Logged meals injected by 2_scripts/script.js -->
+          </ul>
+        </div>
+      </section>
+    </aside>
+
+    <!-- RIGHT COLUMN: Recipe Discovery Feed -->
+    <section class="recipes-area" aria-labelledby="recipes-heading">
+      <div class="recipes-toolbar card">
+        <div>
+          <h2 id="recipes-heading">Matching Recipes</h2>
+          <p class="subtitle" id="recipe-summary-text">
+            Add ingredients to your pantry to see ranked meal ideas.
+          </p>
+        </div>
+
+        <div class="filter-controls">
+          <label for="sort-select" class="sr-only">Sort recipes by</label>
+          <select id="sort-select">
+            <option value="best-match">Sort: Best Pantry Match</option>
+            <option value="fewest-missing">Sort: Fewest Missing Items</option>
+            <option value="highest-protein">Sort: Highest Protein</option>
+            <option value="lowest-calories">Sort: Lowest Calories</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="status-banner" class="status-banner hidden" role="status"></div>
+
+      <div id="recipe-feed" class="recipe-feed" aria-live="polite">
+        <!-- Recipe cards injected by 2_scripts/script.js -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="container">
+      <p>Pantry-to-Plate &bull; Built for MGIS 130 &bull; Data saved locally in your browser.</p>
+    </div>
+  </footer>
+
+  <!-- Data Layer first, then Processing/Presentation Layer -->
+  <script src="1_data/data.js"></script>
+  <script src="2_scripts/script.js"></script>
+</body>
+</html>
