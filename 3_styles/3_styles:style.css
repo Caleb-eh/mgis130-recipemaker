@@ -40,6 +40,10 @@ body {
   clip: rect(0, 0, 0, 0);
 }
 
+.hidden {
+  display: none !important;
+}
+
 .container {
   width: 100%;
   max-width: 1180px;
@@ -140,6 +144,11 @@ input {
   background-color: var(--primary-hover);
 }
 
+.btn-full {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
 .btn-text {
   background: none;
   border: none;
@@ -166,6 +175,21 @@ input {
   text-decoration: underline;
 }
 
+.btn-edit {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  color: var(--primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-edit:hover {
+  background: var(--primary-light);
+}
+
 .btn-remove {
   background: none;
   border: none;
@@ -182,32 +206,122 @@ input {
   color: var(--danger);
 }
 
-/* Pantry Form & List */
-.pantry-form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+/* Searchable Ingredient Picker Panel */
+.picker-panel {
+  background: var(--bg-page);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 12px;
   margin-bottom: 12px;
 }
 
-.pantry-form input {
-  width: 100%;
-  padding: 9px 12px;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  font-size: 0.92rem;
+.picker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
 }
 
-.pantry-form input:focus {
+.picker-panel input,
+.picker-panel select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #ffffff;
+  font-size: 0.9rem;
+}
+
+.picker-panel input:focus,
+.picker-panel select:focus {
   outline: 2px solid var(--primary);
   border-color: transparent;
 }
 
-.input-row {
-  display: flex;
-  gap: 8px;
+.search-results-list {
+  list-style: none;
+  margin-top: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #ffffff;
 }
 
+.search-result-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--bg-page);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.88rem;
+  text-transform: capitalize;
+}
+
+.search-result-btn:hover {
+  background: var(--primary-light);
+}
+
+.type-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  color: #334155;
+  text-transform: uppercase;
+}
+
+.type-badge.liquid {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.type-badge.solid {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.selected-ing-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 8px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.amount-step .input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.amount-step .btn-full {
+  margin-bottom: 0;
+}
+
+/* Pantry List */
 .pantry-meta {
   display: flex;
   justify-content: space-between;
@@ -222,7 +336,7 @@ input {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  max-height: 260px;
+  max-height: 280px;
   overflow-y: auto;
 }
 
@@ -230,21 +344,32 @@ input {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   background: var(--bg-page);
   padding: 7px 10px;
   border-radius: 6px;
   font-size: 0.9rem;
 }
 
+.pantry-item-info {
+  display: flex;
+  flex-direction: column;
+}
+
 .pantry-item-name {
-  font-weight: 500;
+  font-weight: 600;
   text-transform: capitalize;
 }
 
 .pantry-item-qty {
   font-size: 0.8rem;
   color: var(--text-muted);
-  margin-left: 6px;
+}
+
+.pantry-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 /* Nutrition Dashboard */
@@ -368,10 +493,6 @@ input {
   border-radius: 6px;
   font-size: 0.9rem;
   font-weight: 500;
-}
-
-.status-banner.hidden {
-  display: none;
 }
 
 .status-success {
@@ -512,7 +633,7 @@ input {
   font-size: 0.86rem;
   color: var(--text-muted);
   font-style: italic;
-  padding: 6px 0;
+  padding: 8px 10px;
 }
 
 .app-footer {

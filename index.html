@@ -13,7 +13,7 @@
         <h1>Pantry-to-Plate</h1>
         <p class="tagline">Turn what you have into what you eat—and track your macros automatically.</p>
       </div>
-      <div class="data-mode-badge" id="data-mode-badge" title="Currently running on local sample data">
+      <div class="data-mode-badge" id="data-mode-badge" title="Recipe source status">
         Sample Data Mode
       </div>
     </div>
@@ -31,28 +31,68 @@
           </button>
         </div>
 
-        <form id="pantry-form" class="pantry-form">
-          <div class="input-group">
-            <label for="ingredient-input" class="sr-only">Ingredient name</label>
+        <!-- Trigger button to open the ingredient search workflow -->
+        <button type="button" id="open-add-ingredient-btn" class="btn-primary btn-full">
+          + Add Ingredient
+        </button>
+
+        <!-- Two-step searchable ingredient & unit picker -->
+        <div id="ingredient-picker-panel" class="picker-panel hidden">
+          <div class="picker-header">
+            <span id="picker-step-title">Search Common Ingredients</span>
+            <button type="button" id="close-picker-btn" class="btn-text">Cancel</button>
+          </div>
+
+          <!-- Step A: Search Bar & Matching Results -->
+          <div id="picker-search-step">
+            <label for="ingredient-search-input" class="sr-only">Search common ingredients</label>
             <input
               type="text"
-              id="ingredient-input"
-              placeholder="e.g., chicken breast, spinach, rice"
-              autocomplete="off"
-              required
-            />
-          </div>
-          <div class="input-row">
-            <label for="quantity-input" class="sr-only">Optional quantity</label>
-            <input
-              type="text"
-              id="quantity-input"
-              placeholder="Qty (optional, e.g., 2 cups)"
+              id="ingredient-search-input"
+              placeholder="Type to search (e.g., chicken, milk, oats)..."
               autocomplete="off"
             />
-            <button type="submit" class="btn-primary">Add</button>
+            <ul id="ingredient-search-results" class="search-results-list" role="listbox">
+              <!-- Filtered common ingredients injected by 2_scripts/script.js -->
+            </ul>
           </div>
-        </form>
+
+          <!-- Step B: Amount & Unit Menu (appears once an ingredient is picked) -->
+          <form id="ingredient-amount-form" class="amount-step hidden">
+            <div class="selected-ing-banner">
+              <div>
+                <strong id="selected-ing-name">Chicken breast</strong>
+                <span id="selected-ing-type-badge" class="type-badge">Solid</span>
+              </div>
+              <button type="button" id="change-ingredient-btn" class="btn-link">Change</button>
+            </div>
+
+            <div class="input-row">
+              <div class="amount-field">
+                <label for="ingredient-amount-input" class="field-label">Amount</label>
+                <input
+                  type="number"
+                  id="ingredient-amount-input"
+                  min="0.1"
+                  step="any"
+                  placeholder="e.g., 250"
+                  required
+                />
+              </div>
+
+              <div class="unit-field">
+                <label for="ingredient-unit-select" class="field-label">Unit</label>
+                <select id="ingredient-unit-select" required>
+                  <!-- Solid or Liquid units populated dynamically -->
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" id="save-ingredient-btn" class="btn-primary btn-full">
+              Save to Pantry
+            </button>
+          </form>
+        </div>
 
         <div class="pantry-meta">
           <span id="pantry-count">0 items in pantry</span>
